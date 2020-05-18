@@ -1,5 +1,5 @@
-////////////////////////////СОРТИРОВКА КОКТЕЛЕМ////////////////////////////
-public class shakerSort {
+///////////////////////////////////////СОРТИРОВКА СЛИВАНИЕМ////////////////////////////
+public class sort{
     public static void main(String[] args) {
         int check = 0;
         int[] arr = new int[10];
@@ -22,15 +22,43 @@ public class shakerSort {
         }
         System.out.println();
         double[] time = new double[5];
-        double before4 = System.currentTimeMillis();
-        arr = Sort.shakerSort(arr);
-        System.out.println("Коктейльне сортування");
+        double before2 = System.currentTimeMillis();
+        arr = Sort.sort(arr);
+        System.out.println("Сортировка");
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " ");
         }
-        double after4 = System.currentTimeMillis();
         System.out.println();
-        time[3] = (after4 - before4);
-        System.out.println(time[3] + " ms");
+        double after2 = System.currentTimeMillis();
+        time[1] = (after2 - before2);
+        System.out.println(time[1] + " ms");
     }
 }
+public
+ static int[] sort(int[] mas) {
+        if(mas.length < 2) return mas;
+        int middle = mas.length / 2;
+        int[] mas1 = Arrays.copyOfRange(mas, 0, middle);
+        int[] mas2 = Arrays.copyOfRange(mas, middle, mas.length);
+        return merge(sort(mas1), sort(mas2));
+    }
+    public static int[] merge(int[] mas1, int mas2[]) {
+        int n = mas1.length + mas2.length;
+        int[] mas = new int[n];
+        int i1 = 0;
+        int i2 = 0;
+        for(int i = 0; i < n; i++) {
+            if (i1 == mas1.length) {
+                mas[i] = mas2[i2++];
+            } else if (i2 == mas2.length) {
+                mas[i] = mas1[i1++];
+            } else {
+                if (mas1[i1] < mas2[i2]) {
+                    mas[i] = mas1[i1++];
+                } else {
+                    mas[i] = mas2[i2++];
+                }
+            }
+        }
+        return mas;
+    }
